@@ -2,6 +2,8 @@ import React from "react";
 import Home from "./assets/page/Home";
 import Login from "./assets/page/Login"
 import Signup from "./assets/page/Signup"
+import Dashboard from "./assets/page/Dashboard";
+import DashboardProduct from "./assets/page/DashboardProduct";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -16,6 +18,14 @@ const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <Signup />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+  },
+  {
+    path: "/dashboard/product",
+    element: <DashboardProduct />,
   },
 ]);
 
