@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "./assets/page/Home";
-import Login from "./assets/page/Login"
-import Signup from "./assets/page/Signup"
+import Login from "./assets/page/Login";
+import Signup from "./assets/page/Signup";
 import Dashboard from "./assets/page/Dashboard";
 import DashboardProduct from "./assets/page/DashboardProduct";
 import DashboardTransactions from "./assets/page/DashboardTransactions";
@@ -10,6 +10,9 @@ import DashboardTransactionsDetail from "./assets/page/DashboardTransactionsDeta
 import DashboardFavorite from "./assets/page/DashboardFavorite";
 import DashboardNewProduct from "./assets/page/DashboardNewProduct";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Categories from "./assets/page/Categories";
+import Product from "./assets/page/Product";
+import Cart from "./assets/page/Cart";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,17 @@ const router = createBrowserRouter([
     path: "/dashboard/product",
     element: <DashboardProduct />,
   },
+  {
+    path: "/categories",
+    element: <Categories />,
+  },
+  {
+    path: "/product",
+    element: <Product />,
+  },
+  {
+    path: "/product/cart",
+    element: <Cart />,
   {
     path: "/dashboard/transaction/sell-product",
     element: <DashboardTransactions />,
