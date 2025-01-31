@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import NavbarLogin from "../../../../../laris/src/assets/component/NavbarLogin";
-import Footer from "../../../../../laris/src/assets/component/Footer";
+import NavbarLogin from "../component/NavbarLogin";
+import Footer from "../component/Footer";
 import CategoryMenu from "../component/categories/CategoryMenu";
 import CategoryTV from "../component/categories/CategoryTV";
 import CategoryHeadset from "../component/categories/CategoryHeadset";
