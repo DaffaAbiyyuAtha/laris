@@ -16,18 +16,18 @@ function Sidebar() {
                     <Link to="/dashboard/product" className="hover:text-[#24B8C5]">
                         My Products
                     </Link>
-                    <div className="hover:text-[#24B8C5]">
+                    <Link to="/dashboard/transaction/sell-product" className="hover:text-[#24B8C5]">
                         Transactions
-                    </div>
+                    </Link>
                     <div className="hover:text-[#24B8C5]">
                         Store Settings
                     </div>
-                    <div className="hover:text-[#24B8C5]">
+                    <Link to="/dashboard/my-account" className="hover:text-[#24B8C5]">
                         My Account
-                    </div>
-                    <div className="hover:text-[#24B8C5]">
+                    </Link>
+                    <Link to="/dashboard/my-favorite" className="hover:text-[#24B8C5]">
                         My Favorite
-                    </div>
+                    </Link>
                 </div>
             </div>
             <div className="pl-6 pb-24 text-[#C5C5C5] hover:text-red-500">Logout</div>
