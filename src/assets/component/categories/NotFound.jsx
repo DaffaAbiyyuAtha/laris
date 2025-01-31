@@ -10,16 +10,16 @@ export default function NotFound() {
     <div className="flex flex-col items-center">
       <h1 className="text-5xl  font-black font-serif">Oops!</h1>
       <div>
-        <h1 className="text-[#64FCD9] relative text-[500px] font-extrabold ">
+        <h1 className="text-[#64FCD9] relative text-[400px] font-extrabold ">
           404
         </h1>
         <svg
-          width="362"
+          width="300"
           height="401"
           viewBox="0 0 362 400"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute inset-[580px] mx-auto"
+          class="absolute inset-[500px] mx-auto"
         >
           <g clip-path="url(#clip0_6_555)">
             <path

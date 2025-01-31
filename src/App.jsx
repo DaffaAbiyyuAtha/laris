@@ -5,7 +5,9 @@ import Signup from "./assets/page/Signup";
 import Dashboard from "./assets/page/Dashboard";
 import DashboardProduct from "./assets/page/DashboardProduct";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Categories from "./assets/page/user/Categories";
+import Categories from "./assets/page/Categories";
+import Product from "./assets/page/Product";
+import Cart from "./assets/page/Cart";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
   {
     path: "/categories",
     element: <Categories />,
+  },
+  {
+    path: "/product",
+    element: <Product />,
+  },
+  {
+    path: "/product/cart",
+    element: <Cart />,
   },
 ]);
 

@@ -34,7 +34,7 @@ function NavbarLogin() {
         </Link>
 
         <FaHeart />
-        <Link to={"/categories"}>
+        <Link to={"/product/cart"}>
           <FaBagShopping />
         </Link>
       </div>

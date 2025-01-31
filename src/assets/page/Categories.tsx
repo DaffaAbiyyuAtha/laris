@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import NavbarLogin from "../../component/NavbarLogin";
-import Footer from "../../component/Footer";
-import CategoryMenu from "../../component/categories/CategoryMenu";
-import CategoryTV from "../../component/categories/CategoryTV";
-import CategoryHeadset from "../../component/categories/CategoryHeadset";
-import CategorySpeaker from "../../component/categories/CategorySpeaker";
-import CategoryHP from "../../component/categories/CategoryHP";
-import CategoryLaptop from "../../component/categories/CategoryLaptop";
-import CategoryCOM from "../../component/categories/CategoryCOM";
-import CategoryTool from "../../component/categories/CategoryTool";
+import NavbarLogin from "../../../../../laris/src/assets/component/NavbarLogin";
+import Footer from "../../../../../laris/src/assets/component/Footer";
+import CategoryMenu from "../component/categories/CategoryMenu";
+import CategoryTV from "../component/categories/CategoryTV";
+import CategoryHeadset from "../component/categories/CategoryHeadset";
+import CategorySpeaker from "../component/categories/CategorySpeaker";
+import CategoryHP from "../component/categories/CategoryHP";
+import CategoryLaptop from "../component/categories/CategoryLaptop";
+import CategoryCOM from "../component/categories/CategoryCOM";
+import CategoryTool from "../component/categories/CategoryTool";
 
 export default function Categories() {
   const [activeComponent, setActiveComponent] = useState<string>("Headset");
