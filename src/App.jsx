@@ -13,6 +13,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Categories from "./assets/page/Categories";
 import Product from "./assets/page/Product";
 import Cart from "./assets/page/Cart";
+import LoginSuccess from "./assets/page/LoginSuccess";
+import LoginSuccessAdmin from "./assets/page/LoginSuccessAdmin";
 
 const router = createBrowserRouter([
   {
@@ -24,16 +26,16 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "/login/login-success",
+    element: <LoginSuccess />,
+  },
+  {
+    path: "/login/login-success-admin",
+    element: <LoginSuccessAdmin />,
+  },
+  {
     path: "/sign-up",
     element: <Signup />,
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
-  },
-  {
-    path: "/dashboard/product",
-    element: <DashboardProduct />,
   },
   {
     path: "/categories",
@@ -46,6 +48,15 @@ const router = createBrowserRouter([
   {
     path: "/product/cart",
     element: <Cart />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+  },
+  {
+    path: "/dashboard/product",
+    element: <DashboardProduct />,
+  },
   {
     path: "/dashboard/transaction/sell-product",
     element: <DashboardTransactions />,
