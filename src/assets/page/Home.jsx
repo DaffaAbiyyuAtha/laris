@@ -35,16 +35,18 @@ function Home() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-          setPrevIndex(currentIndex); // Simpan indeks gambar sebelumnya
-          setCurrentIndex(prevIndex => (prevIndex + 1) % banners.length); // Gambar bergeser otomatis
-        }, 3000); // 3000 ms = 3 detik
+          setPrevIndex(currentIndex); 
+          setCurrentIndex(prevIndex => (prevIndex + 1) % banners.length); 
+        }, 3000); 
     
-        return () => clearInterval(interval); // Bersihkan interval saat komponen dilepas
+        return () => clearInterval(interval); 
       }, [currentIndex]);
 
     return (
         <div className="flex flex-col gap-10">
             <div><NavbarLogin /></div>
+            <div className="">
+            </div>
             <div className="flex flex-col gap-10 px-28">
             <div className="w-full h-auto overflow-hidden relative">
                 <div className="flex transition-all duration-1000 ease-in-out"
