@@ -9,9 +9,11 @@ import CategoryHP from "../component/categories/CategoryHP";
 import CategoryLaptop from "../component/categories/CategoryLaptop";
 import CategoryCOM from "../component/categories/CategoryCOM";
 import CategoryTool from "../component/categories/CategoryTool";
+import CategoryWatch from "../component/categories/CategoryWatch";
+import CategoryPS from "../component/categories/CategoryPS";
 
 export default function Categories() {
-  const [activeComponent, setActiveComponent] = useState<string>("Headset");
+  const [activeComponent, setActiveComponent] = useState<string>("TV");
   return (
     <div className="flex flex-col h-full justify-between gap-16">
       <NavbarLogin />
@@ -24,6 +26,8 @@ export default function Categories() {
         {activeComponent === "Laptop" && <CategoryLaptop />}
         {activeComponent === "COM" && <CategoryCOM />}
         {activeComponent === "Tool" && <CategoryTool />}
+        {activeComponent === "Watch" && <CategoryWatch />}
+        {activeComponent === "PS" && <CategoryPS />}
       </div>
       <Footer />
     </div>
