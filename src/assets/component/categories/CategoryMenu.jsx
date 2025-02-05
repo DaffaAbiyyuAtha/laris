@@ -410,7 +410,7 @@ export default function CategoryMenu({ setActiveComponent }) {
       </div>
       <div className="flex px-8">
         <div
-          className="flex gap-4 overflow-x-scroll overflow-hidden no-scrollbar py-2 max-w-[1500px]"
+          className="flex gap-4 overflow-x-scroll overflow-hidden no-scrollbar py-2 w-full justify-between"
           id="scroll"
         >
           {itemsCategory.map((item) => (

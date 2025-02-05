@@ -45,11 +45,11 @@ export default function Cart() {
                         <FaXmark />
                       </button>
                       <div className="flex items-center">
-                        <h1 className="font-bold text-2xl">{items.price}</h1>
-                        <h2 className="text-2xl font-bold text-stone-500 line-through">
+                        <h1 className="font-bold text-xl">{items.price}</h1>
+                        <h2 className="text-xl font-bold text-stone-500 line-through">
                           {items.priceDiskon}
                         </h2>
-                        <h3 className="text-2xl text-[#FF2525] font-bold">
+                        <h3 className="text-xl text-[#FF2525] font-bold">
                           {items.diskon}
                         </h3>
                       </div>
