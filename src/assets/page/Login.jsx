@@ -21,7 +21,7 @@ function Login() {
 
   return (
     <div className="">
-      {popUpOpen ? "" : <PopUpLogin />}
+      {/* {popUpOpen ? "" : <PopUpLogin />} */}
       <div className="mb-12">
         <Navbar />
       </div>
