@@ -1,4 +1,4 @@
-import { React, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../component/Navbar"
 import Footer from "../component/Footer"
 import banner from "../img/banner.svg"
@@ -7,6 +7,7 @@ import recomendlaptop from "../img/recomendlaptop.svg"
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 import product4 from "../img/product4.svg"
 import NavbarLogin from "../component/NavbarLogin"
+import { Link } from "react-router-dom";
 
 function Home() {
     const productRefTop = useRef(null);
@@ -14,6 +15,7 @@ function Home() {
     const banners = [banner, banner, banner];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [prevIndex, setPrevIndex] = useState(0);
+    const [listProducts, setListProduts] = React.useState([]);
 
     const handleScroll = (direction) => {
         if (productRefTop.current) {
@@ -33,6 +35,13 @@ function Home() {
         }
     };
 
+    async function productHome() {
+        const dataHome = await fetch("http://localhost:8080/product/home", {});
+        const listProduct = await dataHome.json();
+        setListProduts(listProduct.result);
+        console.log(listProduct.result)
+      }
+
     useEffect(() => {
         const interval = setInterval(() => {
           setPrevIndex(currentIndex); 
@@ -41,7 +50,11 @@ function Home() {
     
         return () => clearInterval(interval); 
       }, [currentIndex]);
-
+    
+    useEffect(() => {
+        productHome();
+    }, []);
+    
     return (
         <div className="flex flex-col gap-10">
             <div><NavbarLogin /></div>
@@ -79,132 +92,90 @@ function Home() {
                         className="flex gap-2 overflow-x-auto scrollbar-hide"
                         ref={productRefTop}
                         >
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                            <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
+                                <div className="mb-4">
+                                    <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                                </div>
+                                <div className="font-semibold text-xl mb-2">
+                                    Galaxy Watch 6
+                                </div>
+                                <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
+                                    Rp 3.500.000
+                                </div>
+                                <div className="text-center font-semibold">
+                                    Rp 2.450.000
+                                </div>
                             </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
+                            <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
+                                <div className="mb-4">
+                                    <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                                </div>
+                                <div className="font-semibold text-xl mb-2">
+                                    Galaxy Watch 6
+                                </div>
+                                <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
+                                    Rp 3.500.000
+                                </div>
+                                <div className="text-center font-semibold">
+                                    Rp 2.450.000
+                                </div>
                             </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
+                            <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
+                                <div className="mb-4">
+                                    <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                                </div>
+                                <div className="font-semibold text-xl mb-2">
+                                    Galaxy Watch 6
+                                </div>
+                                <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
+                                    Rp 3.500.000
+                                </div>
+                                <div className="text-center font-semibold">
+                                    Rp 2.450.000
+                                </div>
                             </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
+                            <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
+                                <div className="mb-4">
+                                    <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                                </div>
+                                <div className="font-semibold text-xl mb-2">
+                                    Galaxy Watch 6
+                                </div>
+                                <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
+                                    Rp 3.500.000
+                                </div>
+                                <div className="text-center font-semibold">
+                                    Rp 2.450.000
+                                </div>
                             </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                            <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
+                                <div className="mb-4">
+                                    <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                                </div>
+                                <div className="font-semibold text-xl mb-2">
+                                    Galaxy Watch 6
+                                </div>
+                                <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
+                                    Rp 3.500.000
+                                </div>
+                                <div className="text-center font-semibold">
+                                    Rp 2.450.000
+                                </div>
                             </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
+                            <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
+                                <div className="mb-4">
+                                    <img src={product4} alt="" className="w-[150px] h-[150px]" />
+                                </div>
+                                <div className="font-semibold text-xl mb-2">
+                                    Galaxy Watch 6
+                                </div>
+                                <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
+                                    Rp 3.500.000
+                                </div>
+                                <div className="text-center font-semibold">
+                                    Rp 2.450.000
+                                </div>
                             </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
-                            </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
-                            </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
-                            </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
-                            </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
-                            </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
-                            </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
-                            </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
-                            </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
-                            </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
-                            </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
-                            </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
-                            </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
-                        <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
-                            <div className="mb-4">
-                                <img src={product4} alt="" className="w-[150px] h-[150px]" />
-                            </div>
-                            <div className="font-semibold text-xl mb-2">
-                                Galaxy Watch 6
-                            </div>
-                            <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">
-                                Rp 3.500.000
-                            </div>
-                            <div className="text-center font-semibold">
-                                Rp 2.450.000
-                            </div>
-                        </div>
                     </div>
                     <div className="flex gap-2 h-full items-end">
                         <div className="bg-[#ECF6FF] p-1 rounded cursor-pointer"
@@ -278,94 +249,23 @@ function Home() {
                 <div 
                     ref={productRefBottom}
                     className="flex overflow-x-auto scrollbar-hide gap-3">
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
-                        <div className="flex w-48 h-48 justify-center items-center">
-                            <img src={product4} alt="" />
-                        </div>
-                        <div className="text-xl">
-                            Galaxy Watch 6
-                        </div>
-                        <div className="">
-                            Rp 2.450.000
-                        </div>
-                    </div>
+                        {listProducts.map((items) => {
+                            return (
+                                <Link to={`/product/${items.id}`}>
+                                    <div className="flex flex-col justify-center items-center gap-3 bg-[#ECF6FF] font-semibold p-2 rounded shadow-lg flex-shrink-0">
+                                        <div className="flex w-48 h-48 justify-center items-center">
+                                            <img src={items.image} alt="" />
+                                        </div>
+                                        <div className="text-xl">
+                                            {items.nameProduct}
+                                        </div>
+                                        <div className="">
+                                            Rp {new Intl.NumberFormat('id-ID').format(items.price)}
+                                        </div>
+                                    </div>
+                                </Link>
+                            )
+                        })}
                 </div>
             </div>
             <div className="">

@@ -15,6 +15,7 @@ import Product from "./assets/page/Product";
 import Cart from "./assets/page/Cart";
 import LoginSuccess from "./assets/page/LoginSuccess";
 import LoginSuccessAdmin from "./assets/page/LoginSuccessAdmin";
+import Coba from "./assets/page/Coba"
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
     element: <Categories />,
   },
   {
-    path: "/product",
+    path: "/product/:id",
     element: <Product />,
   },
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard/product/new-product",
     element: <DashboardNewProduct />,
+  },
+  {
+    path: "/coba",
+    element: <Coba />,
   },
 ]);
 
