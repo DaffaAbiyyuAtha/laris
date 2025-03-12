@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Sidebar from "../component/Sidebar";
 import NavbarDashboard from "../component/NavbarDashboard";
 import product1 from "../img/product1.svg"
@@ -6,6 +6,29 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 function DashboardProduct() {
+    const [listProducts, setListProduts] = React.useState([]);
+
+    async function productHome() {
+        const dataHome = await fetch("http://localhost:8080/product/home", {});
+        const listData = await dataHome.json();
+        console.log(listData.result)
+        setListProduts(listData.result);
+    }
+
+    async function productHomeFilter(data) {
+        data.preventDefault();
+        const dataSearch = data.target.search.value;
+        console.log(dataSearch)
+        const dataHome = await fetch("http://localhost:8080/product/filter/?product=" + dataSearch, {});
+        const listProduct = await dataHome.json();
+        setListProduts(listProduct.result);
+        console.log(listProduct.result)
+    }
+
+    useEffect(() => {
+        productHome();
+      }, []);
+
     return (
         <div className="flex h-screen text-[#0C0D36]">
             <div className="w-1/5">
@@ -28,7 +51,9 @@ function DashboardProduct() {
                     >
                         Add New Product
                 </Link>
-                <div className="flex justify-end">
+                <form 
+                    onSubmit={productHomeFilter}
+                    className="flex justify-end">
                     <div className="flex mb-4 max-w-52 w-full gap-4 items-center border-black bg-transparent border-2 h-9 px-6 rounded-2xl overflow-hidden ">
                         <button type="button" className="">
                             <FaMagnifyingGlass />
@@ -41,65 +66,20 @@ function DashboardProduct() {
                             className="flex-1 outline-none bg-transparent text-xs"
                         />
                     </div>
-                </div>
+                </form>
                 <div className="h-0 flex-grow overflow-y-auto">
                     <div className="grid grid-cols-3 gap-10">
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
-                        <div className="bg-white p-3 rounded-lg">
-                            <div className="mb-5">
-                                <img src={product1} alt="" className="object-cover object-center"/>
-                            </div>
-                            <div className="text-lg">MSI Raider GE76</div>
-                            <div className="text-[#C5C5C5]">electronic</div>
-                        </div>
+                        {listProducts.map((items) => {
+                            return (
+                                <div className="bg-white p-3 rounded-lg">
+                                    <div className="mb-5">
+                                        <img src={items.image[0]} alt="" className="object-cover object-center"/>
+                                    </div>
+                                    <div className="text-lg">{items.nameProduct}</div>
+                                    <div className="text-[#C5C5C5]">{items.name_categories}</div>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
