@@ -17,13 +17,13 @@ function DashboardProduct() {
 
     async function productHomeFilter(data) {
         data.preventDefault();
-        const dataSearch = data.target.search.value;
-        console.log(dataSearch)
-        const dataHome = await fetch("http://localhost:8080/product/filter/?product=" + dataSearch, {});
+        const dataSearch = encodeURIComponent(data.target.search.value); // Encode data
+        const dataHome = await fetch(`http://localhost:8080/product/filter?product=${dataSearch}`, {});
         const listProduct = await dataHome.json();
         setListProduts(listProduct.result);
-        console.log(listProduct.result)
+        console.log(listProduct.result);
     }
+    
 
     useEffect(() => {
         productHome();
@@ -67,21 +67,25 @@ function DashboardProduct() {
                         />
                     </div>
                 </form>
-                <div className="h-0 flex-grow overflow-y-auto">
-                    <div className="grid grid-cols-3 gap-10">
-                        {listProducts.map((items) => {
-                            return (
-                                <div className="bg-white p-3 rounded-lg">
-                                    <div className="mb-5">
-                                        <img src={items.image[0]} alt="" className="object-cover object-center"/>
+                {listProducts.length === 0 ? (
+                    <div className="flex h-screen w-full justify-center items-center">Product Not Found</div>
+                ) : (
+                    <div className="h-0 flex-grow overflow-y-auto">
+                        <div className="grid grid-cols-3 gap-10">
+                            {listProducts.map((items) => {
+                                return (
+                                    <div className="bg-white p-3 rounded-lg">
+                                        <div className="mb-5">
+                                            <img src={items.image[0]} alt="" className="object-cover object-center"/>
+                                        </div>
+                                        <div className="text-lg">{items.nameProduct}</div>
+                                        <div className="text-[#C5C5C5]">{items.name_categories}</div>
                                     </div>
-                                    <div className="text-lg">{items.nameProduct}</div>
-                                    <div className="text-[#C5C5C5]">{items.name_categories}</div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     )
