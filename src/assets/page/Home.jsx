@@ -7,7 +7,17 @@ import recomendlaptop from "../img/recomendlaptop.svg"
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 import product4 from "../img/product4.svg"
 import NavbarLogin from "../component/NavbarLogin"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CategoryMenu from "../component/categories/CategoryMenu";
+import CategoryTV from "../component/categories/CategoryTV";
+import CategoryHeadset from "../component/categories/CategoryHeadset";
+import CategorySpeaker from "../component/categories/CategorySpeaker";
+import CategoryHP from "../component/categories/CategoryHP";
+import CategoryLaptop from "../component/categories/CategoryLaptop";
+import CategoryCOM from "../component/categories/CategoryCOM";
+import CategoryTool from "../component/categories/CategoryTool";
+import CategoryWatch from "../component/categories/CategoryWatch";
+import CategoryPS from "../component/categories/CategoryPS";
 
 function Home() {
     const productRefTop = useRef(null);
@@ -16,6 +26,12 @@ function Home() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [prevIndex, setPrevIndex] = useState(0);
     const [listProducts, setListProduts] = React.useState([]);
+    const [activeComponent, setActiveComponent] = useState("");
+    const navigate = useNavigate();
+
+    const handleCategoryClick = (category) => {
+        navigate(`/categories`);
+    };
 
     const handleScroll = (direction) => {
         if (productRefTop.current) {
@@ -58,7 +74,17 @@ function Home() {
     return (
         <div className="flex flex-col gap-10">
             <div><NavbarLogin /></div>
-            <div className="">
+            <div className="flex justify-center">
+                <CategoryMenu setActiveComponent={setActiveComponent} />
+                {activeComponent === "TV" && handleCategoryClick("TV")}
+                {activeComponent === "Speaker" && handleCategoryClick("Speaker")}
+                {activeComponent === "Headset" && handleCategoryClick("Headset")}
+                {activeComponent === "HP" && handleCategoryClick("HP")}
+                {activeComponent === "Laptop" && handleCategoryClick("Laptop")}
+                {activeComponent === "COM" && handleCategoryClick("COM")}
+                {activeComponent === "Tool" && handleCategoryClick("Tool")}
+                {activeComponent === "Watch" && handleCategoryClick("Watch")}
+                {activeComponent === "PS" && handleCategoryClick("PS")}
             </div>
             <div className="flex flex-col gap-10 px-28">
             <div className="w-full h-auto overflow-hidden relative">

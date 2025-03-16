@@ -1,9 +1,16 @@
 "use client";
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 export default function CategoryMenu({ setActiveComponent }) {
   const [activeButton, setActiveButton] = useState(null);
+  const navigate = useNavigate();
+
+  const ButtonClickerer = (component) => {
+    setActiveComponent(component);
+    navigate(`/categories?category=${component}`);
+  };
 
   const itemsCategory = [
     {
@@ -376,7 +383,7 @@ export default function CategoryMenu({ setActiveComponent }) {
     },
   ];
 
-  const ButtonClick = (component) => {
+  const ButtonClicker = (component) => {
     setActiveComponent(component);
     setActiveButton(component);
   };
@@ -390,9 +397,9 @@ export default function CategoryMenu({ setActiveComponent }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-fit">
+    <div className="flex flex-col gap-4 w-full px-28">
       <div className="flex justify-between items-center w-full gap-4">
-        <h1 className="font-semibold text-3xl text-[#408A89]">Categories</h1>
+        <h1 className="font-semibold text-2xl text-[#408A89]">Categories</h1>
         <div className="flex gap-1">
           <button
             onClick={scrollLeft}
@@ -408,24 +415,27 @@ export default function CategoryMenu({ setActiveComponent }) {
           </button>
         </div>
       </div>
-      <div className="flex px-8">
-        <div
-          className="flex gap-4 overflow-x-scroll overflow-hidden no-scrollbar py-2 max-w-[1500px]"
-          id="scroll"
-        >
-          {itemsCategory.map((item) => (
-            <button
-              key={item.id}
-              className={`flex flex-col items-center min-w-[200px] py-3 min-h-[165px] shadow-black/45 shadow-md ${
-                activeButton === item.activeComponent
-                  ? "border-[#408A89] border-4  rounded-lg shadow-lg box-border"
-                  : "border-y-4 border-y-white border-x-4 border-x-white  rounded-lg box-border"
-              }`}
-              onClick={() => ButtonClick(item.activeComponent)}
-            >
-              {item.content}
-            </button>
-          ))}
+
+      <div className="flex justify-center">
+        <div className="container">
+          <div
+            className="flex gap-4 overflow-x-scroll no-scrollbar py-2 px-20"
+            id="scroll"
+          >
+            {itemsCategory.map((item) => (
+              <button
+                key={item.id}
+                className={`flex flex-col items-center min-w-[200px] py-3 min-h-[165px] shadow-black/45 shadow-md ${
+                  activeButton === item.activeComponent
+                    ? "border-[#408A89] border-4  rounded-lg shadow-lg box-border"
+                    : "border-y-4 border-y-white border-x-4 border-x-white  rounded-lg box-border"
+                }`}
+                onClick={() => ButtonClicker(item.activeComponent)}
+              >
+                {item.content}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
