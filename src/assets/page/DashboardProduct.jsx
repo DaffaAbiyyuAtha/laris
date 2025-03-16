@@ -9,19 +9,18 @@ function DashboardProduct() {
     const [listProducts, setListProduts] = React.useState([]);
 
     async function productHome() {
-        const dataHome = await fetch("http://localhost:8080/product/home", {});
-        const listData = await dataHome.json();
+        const dataProducts = await fetch("http://localhost:8080/product/home", {});
+        const listData = await dataProducts.json();
         console.log(listData.result)
         setListProduts(listData.result);
     }
 
     async function productHomeFilter(data) {
         data.preventDefault();
-        const dataSearch = encodeURIComponent(data.target.search.value); // Encode data
-        const dataHome = await fetch(`http://localhost:8080/product/filter?product=${dataSearch}`, {});
-        const listProduct = await dataHome.json();
+        const dataSearch = encodeURIComponent(data.target.search.value);
+        const dataProducts = await fetch(`http://localhost:8080/product/filter?product=${dataSearch}`, {});
+        const listProduct = await dataProducts.json();
         setListProduts(listProduct.result);
-        console.log(listProduct.result);
     }
     
 
