@@ -15,7 +15,7 @@ import Product from "./assets/page/Product";
 import Cart from "./assets/page/Cart";
 import LoginSuccess from "./assets/page/LoginSuccess";
 import LoginSuccessAdmin from "./assets/page/LoginSuccessAdmin";
-import Coba from "./assets/page/Coba"
+import Coba from "./assets/page/Coba";
 
 const router = createBrowserRouter([
   {
