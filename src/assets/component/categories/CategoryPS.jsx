@@ -16,9 +16,6 @@ export default function CategoryPS() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch(
-          "http://localhost:8080/product/category?categoriesId=9"
-        );
         const res = await fetch("http://localhost:8100/categories/filter?search=PS");
         const data = await res.json();
         console.log("Fetched data:", data);
@@ -40,7 +37,7 @@ export default function CategoryPS() {
       ) : (
         <div className="flex flex-col items-center justify-center h-full gap-6">
           <div className="grid grid-cols-4 gap-x-10 gap-y-12">
-            {(displayedProducts || []).map((product, index) => (
+            {displayedProducts.map((product, index) => (
               <div
                 key={index}
                 className="flex flex-col bg-[#ECF6FF] gap-6 px-11 shadow-lg rounded-lg shadow-black/50 py-3"
@@ -72,6 +69,7 @@ export default function CategoryPS() {
                   page === 1 ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 onClick={() => page > 1 && setPage(page - 1)}
+                disabled={page === 1}
               >
                 Previous
               </button>
@@ -80,6 +78,7 @@ export default function CategoryPS() {
                   page === totalPages ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 onClick={() => page < totalPages && setPage(page + 1)}
+                disabled={page === totalPages}
               >
                 Next
               </button>

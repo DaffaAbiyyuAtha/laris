@@ -16,7 +16,6 @@ import Cart from "./assets/page/Cart";
 import LoginSuccess from "./assets/page/LoginSuccess";
 import LoginSuccessAdmin from "./assets/page/LoginSuccessAdmin";
 import Coba from "./assets/page/Coba";
-import Coba from "./assets/page/Coba"
 import { Provider } from "react-redux";
 import {store} from "./assets/redux/store";
 import {persistStore} from "redux-persist";
