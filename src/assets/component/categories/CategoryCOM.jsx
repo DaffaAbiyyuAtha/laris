@@ -16,7 +16,7 @@ export default function CategoryCOM() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://localhost:8080/categories/filter?search=COM");
+        const res = await fetch("http://localhost:8100/categories/filter?search=COM");
         const data = await res.json();
         setProducts(data.result);
       } catch (error) {

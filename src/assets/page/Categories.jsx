@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NavbarLogin from "../component/NavbarLogin";
+import Navbar from "../component/Navbar";
 import Footer from "../component/Footer";
 import CategoryMenu from "../component/categories/CategoryMenu";
 import CategoryTV from "../component/categories/CategoryTV";
@@ -19,7 +19,7 @@ export default function Categories() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch(`http://localhost:8080/categories/filter?search=${activeComponent}`);
+        const res = await fetch(`http://localhost:8100/categories/filter?search=${activeComponent}`);
         const data = await res.json();
         setProduct(data.result);
       } catch (error) {
@@ -32,7 +32,7 @@ export default function Categories() {
 
   return (
     <div className="flex flex-col h-full justify-between gap-16">
-      <NavbarLogin />
+      <Navbar />
       <div className="flex flex-col items-center gap-16 h-screen">
         <CategoryMenu setActiveComponent={setActiveComponent} />
           {activeComponent === "TV" && <CategoryTV products={product} />}

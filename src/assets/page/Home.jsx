@@ -52,11 +52,11 @@ function Home() {
     };
 
     async function productHome() {
-        const dataHome = await fetch("http://localhost:8080/product/home", {});
+        const dataHome = await fetch("http://localhost:8100/product/home", {});
         const listProduct = await dataHome.json();
         setListProduts(listProduct.result);
         console.log(listProduct.result)
-      }
+    }
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -73,7 +73,7 @@ function Home() {
     
     return (
         <div className="flex flex-col gap-10">
-            <div><NavbarLogin /></div>
+            <div><Navbar /></div>
             <div className="flex justify-center">
                 <CategoryMenu setActiveComponent={setActiveComponent} />
                 {activeComponent === "TV" && handleCategoryClick("TV")}
