@@ -16,7 +16,7 @@ export default function CategoryTV() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://localhost:8080/categories/filter?search=TV");
+        const res = await fetch("http://localhost:8100/categories/filter?search=TV");
         const data = await res.json();
         setProducts(data.result);
       } catch (error) {

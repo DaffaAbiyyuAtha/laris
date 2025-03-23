@@ -50,7 +50,6 @@ function Home() {
       });
     }
   };
-
   async function productHome() {
     const dataHome = await fetch("http://localhost:8080/product/home", {});
     const listProduct = await dataHome.json();
@@ -127,6 +126,55 @@ function Home() {
               <div className="bg-[#ECF6FF] rounded p-5 flex-shrink-0">
                 <div className="mb-4">
                   <img src={product4} alt="" className="w-[150px] h-[150px]" />
+    async function productHome() {
+        const dataHome = await fetch("http://localhost:8100/product/home", {});
+        const listProduct = await dataHome.json();
+        setListProduts(listProduct.result);
+        console.log(listProduct.result)
+    }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          setPrevIndex(currentIndex); 
+          setCurrentIndex(prevIndex => (prevIndex + 1) % banners.length); 
+        }, 3000); 
+    
+        return () => clearInterval(interval); 
+      }, [currentIndex]);
+    
+    useEffect(() => {
+        productHome();
+    }, []);
+    
+    return (
+        <div className="flex flex-col gap-10">
+            <div><Navbar /></div>
+            <div className="flex justify-center">
+                <CategoryMenu setActiveComponent={setActiveComponent} />
+                {activeComponent === "TV" && handleCategoryClick("TV")}
+                {activeComponent === "Speaker" && handleCategoryClick("Speaker")}
+                {activeComponent === "Headset" && handleCategoryClick("Headset")}
+                {activeComponent === "HP" && handleCategoryClick("HP")}
+                {activeComponent === "Laptop" && handleCategoryClick("Laptop")}
+                {activeComponent === "COM" && handleCategoryClick("COM")}
+                {activeComponent === "Tool" && handleCategoryClick("Tool")}
+                {activeComponent === "Watch" && handleCategoryClick("Watch")}
+                {activeComponent === "PS" && handleCategoryClick("PS")}
+            </div>
+            <div className="flex flex-col gap-10 px-28">
+            <div className="w-full h-auto overflow-hidden relative">
+                <div className="flex transition-all duration-1000 ease-in-out"
+                    style={{
+                        transform: `translateX(-${currentIndex * 100}%)`,
+                    }}>
+                    {banners.map((banner, index) => (
+                    <img
+                        key={index}
+                        src={banner}
+                        alt={`Banner ${index + 1}`}
+                        className="w-full h-full object-contain flex-shrink-0"
+                    />
+                    ))}
                 </div>
                 <div className="font-semibold text-xl mb-2">Galaxy Watch 6</div>
                 <div className="text-[#FF2525] text-xs font-semibold mb-2 line-through">

@@ -1,9 +1,19 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate, useParams } from "react-router-dom";
 import logo from "../img/logo.svg";
+import { logout } from "../redux/reducers/auth"
+import { useDispatch, useSelector } from "react-redux";
+import { removeData } from "../redux/reducers/profile";
 
 function Sidebar() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation(); 
+    function clearData() {
+        dispatch(logout());
+        dispatch(removeData());
+        navigate("/login");
+      }
 
     const menuItems = [
         { path: "/dashboard", label: "Dashboard" },
@@ -36,7 +46,11 @@ function Sidebar() {
                     <div className="hover:text-[#24B8C5]">Store Settings</div>
                 </div>
             </div>
-            <div className="pl-6 pb-24 text-[#C5C5C5] hover:text-red-500">Logout</div>
+            <button 
+                onClick={clearData}
+                className="flex px-8 pb-24 justify-start text-[#C5C5C5] hover:text-red-500">
+                    Logout
+            </button>
         </div>
     );
 }

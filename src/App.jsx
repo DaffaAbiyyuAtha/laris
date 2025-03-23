@@ -16,7 +16,13 @@ import Cart from "./assets/page/Cart";
 import LoginSuccess from "./assets/page/LoginSuccess";
 import LoginSuccessAdmin from "./assets/page/LoginSuccessAdmin";
 import Coba from "./assets/page/Coba";
+import Coba from "./assets/page/Coba"
+import { Provider } from "react-redux";
+import {store} from "./assets/redux/store";
+import {persistStore} from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
+const persistor = persistStore(store)
 const router = createBrowserRouter([
   {
     path: "/",
@@ -85,7 +91,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
+  );
 }
 
 export default App;

@@ -4,8 +4,74 @@ import NavbarDashboard from "../component/NavbarDashboard";
 import product1 from "../img/product1.svg"
 import product2 from "../img/product2.svg"
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { datasProfile } from "../redux/reducers/profile";
 
 function DashboardAccount() {
+    const tokens = useSelector((state) => state.auth.token);
+    const data = useSelector((state) => state.profile.dataProfile);
+    console.log(data)
+    const [message, setMessage] = React.useState(true);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => setMessage(""), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
+
+    async function updateProfile(profile) {
+        profile.preventDefault();
+        const fullname = profile.target.fullname.value.trim() || "";
+        const province = profile.target.province.value.trim() || "";
+        const city = profile.target.city.value.trim();
+        const postalCode = profile.target.postalCode.value.trim() || null;
+        const gender = profile.target.gender.value.trim() || null;
+        const country = profile.target.country.value.trim() || "";
+        const mobile = profile.target.mobile.value.trim() || null;
+        const address = profile.target.address.value.trim() || "";
+
+        const form = new URLSearchParams();
+
+        form.append("fullname", fullname);
+        form.append("province", province);
+        form.append("city", city === "" ? "" : city);
+        if (postalCode !== null) form.append("postalCode", postalCode);
+        if (gender !== null) form.append("gender", gender);
+        if (mobile !== null) form.append("mobile", mobile);
+        form.append("country", country);
+        form.append("address", address);
+
+        const dataProfile = await fetch("http://localhost:8100/profile/update", {
+            method: "PATCH",
+            headers: {
+                Authorization: "Bearer " + tokens,
+            },
+            body: form,
+        });
+        const listData = await dataProfile.json();
+        setMessage(listData.message);
+        if (listData.message.toLowerCase().includes("success")) {
+            profile();
+        }
+    }
+
+    async function profile() {
+        const dataProfile = await fetch("http://localhost:8100/profile", {
+          headers: {
+            Authorization: "Bearer " + tokens,
+          }
+        });
+        const listData = await dataProfile.json();
+        dispatch(datasProfile(listData.result))
+      }
+
+    useEffect(() => {
+        profile();
+    }, []);
+
     return (
         <div className="flex h-screen text-[#0C0D36]">
             <div className="w-1/5">
@@ -23,24 +89,26 @@ function DashboardAccount() {
                 <div className="text-[#9191A9] mb-6">
                     Update your current profile
                 </div>
-                <div className="bg-white p-10 rounded-lg text-[#0C0D36] h-screen">
+                {typeof message === "string" && (
+                    <div
+                        className={`fixed top-20 right-1/2 transform translate-x-1/2 px-4 py-2 rounded-lg shadow-lg transition-opacity duration-500 ease-in-out ${
+                        message.toLowerCase().includes("failed") ? "bg-red-500" : "bg-green-500"
+                        } ${message ? "opacity-100" : "opacity-0"} text-white`}
+                    >
+                        {message}
+                    </div>
+                )}
+                <form onSubmit={updateProfile} className="bg-white p-10 rounded-lg text-[#0C0D36] h-screen relative">
                     <div className="flex flex-col justify-between h-full">
                         <div className="">
                             <div className="flex gap-6 w-full mb-5">
-                                <div className="w-1/2">
+                                <div className="w-full">
                                     <div className="mb-1">Full Name</div>
                                     <input 
                                         type="text" 
-                                        name="fullName" 
-                                        id="fullName"
-                                        className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
-                                </div>
-                                <div className="w-1/2">
-                                    <div className="mb-1">Email</div>
-                                    <input 
-                                        type="email" 
-                                        name="email" 
-                                        id="email"
+                                        name="fullname" 
+                                        id="fullname"
+                                        defaultValue={data?.profile?.fullName || ""}
                                         className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
                                 </div>
                             </div>
@@ -51,6 +119,7 @@ function DashboardAccount() {
                                         type="text" 
                                         name="province" 
                                         id="province"
+                                        defaultValue={data?.profile?.province || ""}
                                         className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
                                 </div>
                                 <div className="w-1/3">
@@ -59,6 +128,7 @@ function DashboardAccount() {
                                         type="text" 
                                         name="city" 
                                         id="city"
+                                        defaultValue={data?.profile?.city ?? ""}
                                         className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
                                 </div>
                                 <div className="w-1/3">
@@ -67,6 +137,7 @@ function DashboardAccount() {
                                         type="text" 
                                         name="postalCode" 
                                         id="postalCode"
+                                        defaultValue={data?.profile?.postalCode === 0 || data?.profile?.postalCode === "0" ? "" : data?.profile?.postalCode}
                                         className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
                                 </div>
                             </div>
@@ -77,6 +148,7 @@ function DashboardAccount() {
                                         type="text" 
                                         name="country" 
                                         id="country"
+                                        defaultValue={data?.profile?.country || ""}
                                         className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
                                 </div>
                                 <div className="w-1/2">
@@ -85,7 +157,30 @@ function DashboardAccount() {
                                         type="text" 
                                         name="mobile" 
                                         id="mobile"
+                                        defaultValue={data?.profile?.mobile === 0 || data?.profile?.mobile === "0" ? "" : data?.profile?.mobile}
                                         className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
+                                </div>
+                            </div>
+                            <div className="flex gap-6 w-full mb-5">
+                                <div className="flex items-center gap-2 w-1/2">
+                                    <input 
+                                        type="radio" 
+                                        name="gender" 
+                                        id="male" 
+                                        value="1"
+                                        defaultChecked={data?.profile?.gender === 1 || ""}
+                                    />
+                                    <label htmlFor="male">Male</label>
+                                </div>
+                                <div className="flex items-center gap-2 w-1/2">
+                                    <input 
+                                        type="radio" 
+                                        name="gender" 
+                                        id="female" 
+                                        value="2"
+                                        defaultChecked={data?.profile?.gender === 2 || ""}
+                                    />
+                                    <label htmlFor="female">Female</label>
                                 </div>
                             </div>
                             <div className="">
@@ -94,16 +189,17 @@ function DashboardAccount() {
                                     type="textarea" 
                                     name="address" 
                                     id="address"
+                                    defaultValue={data?.profile?.address || ""}
                                     className="p-2 bg-[#F3F3F3] w-full rounded-lg" />
                             </div>
                         </div>
                         <div className="flex justify-end">
-                            <button type="button" className="text-white font-medium bg-[#29A867] rounded-md py-2 px-12">
+                            <button type="submit" className="text-white font-medium bg-[#29A867] rounded-md py-2 px-12">
                                 Save Now
                             </button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )

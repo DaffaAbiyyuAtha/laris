@@ -19,6 +19,7 @@ export default function CategoryPS() {
         const res = await fetch(
           "http://localhost:8080/product/category?categoriesId=9"
         );
+        const res = await fetch("http://localhost:8100/categories/filter?search=PS");
         const data = await res.json();
         console.log("Fetched data:", data);
 

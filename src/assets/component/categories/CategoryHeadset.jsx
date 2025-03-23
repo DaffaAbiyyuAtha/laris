@@ -16,7 +16,7 @@ export default function CategoryHeadset() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://localhost:8080/categories/filter?search=Headset");
+        const res = await fetch("http://localhost:8100/categories/filter?search=Headset");
         const data = await res.json();
         setProducts(data.result);
       } catch (error) {

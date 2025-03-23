@@ -1,14 +1,55 @@
 import React from "react";
 import Navbar from "../component/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaFacebookF, FaEye } from "react-icons/fa6";
+import { login } from "../redux/reducers/auth"
+import { datasProfile } from "../redux/reducers/profile";
 import PopUpLogin from "../component/popUp/popUpLogin";
+import { useDispatch, useSelector } from "react-redux";
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   let [pass, setPassword] = React.useState("password");
-  const [popUpOpen, setPopUpOpen] = React.useState(false);
-  function popUpSubmit() {
-    setPopUpOpen(!popUpOpen);
+  // const [popUpOpen, setPopUpOpen] = React.useState(false);
+  // function popUpSubmit() {
+  //   setPopUpOpen(!popUpOpen);
+  // }
+  function processLogin(dataLogin) {
+    dataLogin.preventDefault();
+    const email = dataLogin.target.email.value;
+    const password = dataLogin.target.password.value;
+    const form = new URLSearchParams();
+
+    form.append("email", email);
+    form.append("password", password)
+
+    fetch("http://localhost:8100/auth/login", {
+      method: "POST",
+      body: form,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success === true) {
+          dispatch(login(data.pageInfo.token));
+          async function profile() {
+            const dataProfile = await fetch("http://localhost:8100/profile", {
+              headers: {
+                Authorization: "Bearer " + data.pageInfo.token,
+              }
+            });
+            const listData = await dataProfile.json();
+            dispatch(datasProfile(listData.result))
+            navigate("/")
+          }
+          profile();
+        } else {
+          console.log(data.message)
+        }
+      })
+      .catch((err) => {
+        console.log("Error:", err.message);
+      });
   }
 
   function changePassword() {
@@ -21,7 +62,7 @@ function Login() {
 
   return (
     <div className="">
-      {popUpOpen ? "" : <PopUpLogin />}
+      {/* {popUpOpen ? "" : <PopUpLogin />} */}
       <div className="mb-12">
         <Navbar />
       </div>
@@ -57,7 +98,7 @@ function Login() {
             <hr className="flex-grow border-t border-[#000]" />
           </div>
           <div className="px-[48px]">
-            <form action="" onSubmit={popUpSubmit}>
+            <form onSubmit={processLogin}>
               <div className="mb-4">
                 <div className="text-[#0C0D36] mb-1">Email Address</div>
                 <input
@@ -93,9 +134,9 @@ function Login() {
                     id="keep"
                     className="accent-[#33BEC5]"
                   />
-                  <div className="text-xs font-medium text-black/60">
+                  <label htmlFor="keep" className="text-xs font-medium text-black/60">
                     Keep me signed in
-                  </div>
+                  </label>
                 </div>
                 <div className="text-xs font-medium text-black/60">
                   Forget Password?
