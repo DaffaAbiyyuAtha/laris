@@ -7,12 +7,14 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { datasProfile } from "../redux/reducers/profile";
+import { useNavigate } from "react-router-dom";
 
 function DashboardAccount() {
     const tokens = useSelector((state) => state.auth.token);
     const data = useSelector((state) => state.profile.dataProfile);
-    console.log(data)
+    const navigate = useNavigate();
     const [message, setMessage] = React.useState(true);
+    console.log(message)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -52,24 +54,24 @@ function DashboardAccount() {
             body: form,
         });
         const listData = await dataProfile.json();
-        setMessage(listData.message);
-        if (listData.message.toLowerCase().includes("success")) {
-            profile();
+        setMessage(listData);
+        if (listData.success) {
+            await fetchProfile();
         }
     }
 
-    async function profile() {
+    async function fetchProfile() {
         const dataProfile = await fetch("http://localhost:8100/profile", {
-          headers: {
-            Authorization: "Bearer " + tokens,
-          }
+            headers: {
+                Authorization: "Bearer " + tokens,
+            }
         });
         const listData = await dataProfile.json();
-        dispatch(datasProfile(listData.result))
-      }
+        dispatch(datasProfile(listData.result));
+    }
 
     useEffect(() => {
-        profile();
+        fetchProfile();
     }, []);
 
     return (
@@ -89,13 +91,13 @@ function DashboardAccount() {
                 <div className="text-[#9191A9] mb-6">
                     Update your current profile
                 </div>
-                {typeof message === "string" && (
+                {message && (
                     <div
-                        className={`fixed top-20 right-1/2 transform translate-x-1/2 px-4 py-2 rounded-lg shadow-lg transition-opacity duration-500 ease-in-out ${
-                        message.toLowerCase().includes("failed") ? "bg-red-500" : "bg-green-500"
-                        } ${message ? "opacity-100" : "opacity-0"} text-white`}
+                    className={`fixed top-20 right-1/2 transform translate-x-1/2 px-4 py-2 rounded-lg shadow-lg transition-opacity duration-500 ease-in-out ${
+                        message.success === false ? "bg-red-500" : "bg-[#33BEC5]"
+                    } text-white`}
                     >
-                        {message}
+                    {message.message}
                     </div>
                 )}
                 <form onSubmit={updateProfile} className="bg-white p-10 rounded-lg text-[#0C0D36] h-screen relative">

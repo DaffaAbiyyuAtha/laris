@@ -4,7 +4,8 @@ import React from "react";
 import { FaRegHeart } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ProductPrice({ data = {}, setMessage }) {
+export default function ProductPrice({ data = {}, setMessage, loading, setLoading }) {
+  const [wishlistUpdated, setWishlistUpdated] = useState(false);
   const nav = useNavigate();
   const navigate = useNavigate();
   const tokens = useSelector((state) => state.auth.token);
@@ -16,19 +17,26 @@ export default function ProductPrice({ data = {}, setMessage }) {
   useEffect(() => {
     async function fetchWishlist() {
       if (!tokens) return;
-      const response = await fetch("http://localhost:8100/wishlist/", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + tokens,
-        },
-      });
+      try {
+        const response = await fetch("http://localhost:8100/wishlist/", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + tokens,
+          },
+        });
   
-      const data = await response.json();
-      setListProduts(data.result);
+        const data = await response.json();
+        setListProduts(Array.isArray(data.result) ? data.result : []);
+        
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+        setListProduts([]);
+      }
     }
   
     fetchWishlist();
   }, [tokens]);
+  
   
   useEffect(() => {
     const isInWishlist = listProducts.some((item) => item.product_id === data.id);
@@ -37,31 +45,43 @@ export default function ProductPrice({ data = {}, setMessage }) {
   }, [listProducts, data.id]);
 
   async function deleteWishlist() {
+    setLoading(true);
+  
     if (!tokens) {
       setMessage("You must login to remove from wishlist");
+      setTimeout(() => setLoading(false), 2000);
       return;
     }
-
-    const dataDelete = await fetch(`http://localhost:8100/wishlist/delete?product_id=` + data.id, {
+  
+    try {
+      const dataDelete = await fetch(`http://localhost:8100/wishlist/delete?product_id=` + data.id, {
         method: 'DELETE',
         headers: {
-            Authorization: "Bearer " + tokens,
+          Authorization: "Bearer " + tokens,
         },
-    });
-    const listDataDelete = await dataDelete.json();
-    if (listDataDelete.success) {
-      navigate(0)
+      });
+  
+      const listDataDelete = await dataDelete.json();
+      if (listDataDelete.success) {
+        setMessage("You remove " + data.nameProduct + " from your wishlist");
+        setWishlistUpdated(true);
+      }
+    } catch (error) {
+      setMessage("Failed to remove from wishlist");
+    } finally {
+      setTimeout(() => setLoading(false), 2000);
     }
   }
-
   async function addWishlist() {
+    setLoading(true);
+  
     if (!tokens) {
       setMessage("You must login to add to wishlist");
+      setTimeout(() => setLoading(false), 2000);
       return;
     }
-
+  
     const createWishlist = data.id;
-    
     const form = new URLSearchParams();
     form.append("product_id", createWishlist);
     
@@ -76,8 +96,11 @@ export default function ProductPrice({ data = {}, setMessage }) {
     
     const result = await response.json();
     if (result.success) {
-      setMessage("You have added" +  "to your wishlist");
+      setMessage("You have added " + data.nameProduct + " to your wishlist");
+      setWishlistUpdated(true);
     }
+  
+    setTimeout(() => setLoading(false), 2000);
   }
   
   useEffect(() => {
@@ -93,6 +116,16 @@ export default function ProductPrice({ data = {}, setMessage }) {
       ? data.price - (data.price * data.discount) / 100
       : data.price
     : 0;
+
+  useEffect(() => {
+    if (wishlistUpdated) {
+      const timer = setTimeout(() => {
+        navigate(0);
+      }, 2000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [wishlistUpdated, navigate]);
 
   return (
     <div className="flex justify-between items-start gap-16 w-full">

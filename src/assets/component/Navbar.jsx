@@ -1,6 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
 import logo from "../img/logo.svg"
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { useSelector } from "react-redux";
 import {
             FaMagnifyingGlass,
@@ -11,8 +12,53 @@ import {
 
 function Navbar() {
     const tokens = useSelector((state) => state.auth.token);
+    const [loading, setLoading] = React.useState(false);
+    const navigate = useNavigate()
+    const location = useLocation();
+
+    function handleAccount() {
+        if (location.pathname !== "/dashboard/my-favorite") {
+            setLoading(true);
+            setTimeout(() => {
+                navigate("/dashboard/my-favorite");
+            }, 2000);
+        }
+    }
+
+    function handleAccount() {
+        if (location.pathname !== "/dashboard/my-account") {
+            setLoading(true);
+            setTimeout(() => {
+                navigate("/dashboard/my-account");
+            }, 2000);
+        }
+    }
+
+    function handleLogin() {
+        if (location.pathname !== "/login") {
+            setLoading(true);
+            setTimeout(() => {
+                navigate("/login");
+            }, 2000);
+        }
+    }
+
+    function handleSignUp() {
+        if (location.pathname !== "/sign-up") {
+            setLoading(true);
+            setTimeout(() => {
+                navigate("/sign-up");
+            }, 2000);
+        }
+    }
+
     return (
         <>
+            {loading && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="spinner"></div>
+                </div>
+            )}
             {tokens === null ? (
                 <div className="flex justify-between items-center border-b-2 h-16 shadow-sm px-28">
                     <Link to="/" className="">
@@ -33,13 +79,16 @@ function Navbar() {
                                 />
                             </div>
                         </div>
-                        <Link to="/sign-up" className="text-[#33BEC5] text-xs">
-                            Sign Up
-                        </Link>
-                        <Link to="/login" 
-                            className="text-xs text-white bg-[#33BEC5] py-1 px-2 rounded-full">
-                            Login
-                        </Link>
+                        <div 
+                            onClick={() => handleSignUp()}
+                            className="text-[#33BEC5] text-xs cursor-pointer">
+                                Sign Up
+                        </div>
+                        <div 
+                            onClick={() => handleLogin()}
+                            className="text-xs text-white bg-[#33BEC5] py-1 px-2 rounded-full cursor-pointer">
+                                Login
+                        </div>
                     </div>
                 </div>
             ) : (
@@ -62,12 +111,18 @@ function Navbar() {
                             />
                         </div>
                         </div>
-                        <Link to="/dashboard">
+                        <div
+                            onClick={() => handleAccount()}
+                            className="cursor-pointer"
+                        >
                             <FaUser />
-                        </Link>
-                        <Link to="/dashboard/my-favorite">
+                        </div>
+                        <div
+                            onClick={() => handleFavorite()}
+                            className="cursor-pointer"
+                        >
                             <FaHeart />
-                        </Link>
+                        </div>
                         <Link to={"/product/cart"}>
                             <FaBagShopping />
                         </Link>
