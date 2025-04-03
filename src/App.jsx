@@ -25,6 +25,7 @@ import Coba from "./assets/page/Coba";
 import DashboardAccountSetting from "./assets/page/DashboardAccountSetting";
 import DashboardAccountSettingAdmin from "./assets/page/DashboardAccountSettingAdmin";
 import PageNotFound from "./assets/page/PageNotFound";
+import PopupProduct from "./assets/component/popUp/PopupProduct";
 
 const persistor = persistStore(store);
 
@@ -54,6 +55,7 @@ function App() {
             <Route path="/login-success" element={<LoginSuccess />} />
             <Route path="/dashboard/account-setting/owner" element={<DashboardAccountSetting />} />
             <Route path="/dashboard/account-setting/admin" element={<DashboardAccountSettingAdmin />} />
+            <Route path="/pop" element={<PopupProduct />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>

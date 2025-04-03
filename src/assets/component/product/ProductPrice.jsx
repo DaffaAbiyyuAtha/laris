@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import { FaRegHeart } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/reducers/cartSlice";
 
-export default function ProductPrice({ data = {}, setMessage, loading, setLoading }) {
+export default function ProductPrice({ data = {}, setMessage, setLoading }) {
+  console.log(data)
+  const cart = useSelector((state) => state.cart.cart);
   const [wishlistUpdated, setWishlistUpdated] = useState(false);
   const nav = useNavigate();
   const navigate = useNavigate();
@@ -13,6 +16,7 @@ export default function ProductPrice({ data = {}, setMessage, loading, setLoadin
   const [mainImage, setMainImage] = useState("");
   const [listProducts, setListProduts] = React.useState([]);
   const [wishlist, setWishlist] = React.useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchWishlist() {
@@ -109,7 +113,38 @@ export default function ProductPrice({ data = {}, setMessage, loading, setLoadin
     }
   }, [images]);
 
-  const handleAddToCart = () => nav("/product/cart");
+  const handleAddToCart = () => {
+    if (!tokens) {
+      setMessage("You must login first to add cart");
+      return;
+    }
+  
+    const productData = {
+      id: data.id,
+      name: data.nameProduct,
+      price: data.price,
+      discount: data.discount,
+      finalPrice: data.discount
+        ? data.price - (data.price * data.discount) / 100
+        : data.price,
+      image: data.image?.[0],
+      category: data.name_categories,
+    };
+
+    if (cart.some(item => item.id === data.id)) {
+      setMessage("This product is already in your cart");
+      return;
+    }
+
+    console.log("Before dispatch:", cart);
+    dispatch(addToCart(productData));
+    console.log("After dispatch:", cart);
+    setMessage("You have successfully added the product to your cart");
+  
+    // setTimeout(() => {
+    //   nav(0);
+    // }, 2000);
+  };
 
   const discountedPrice = data.price
     ? data.discount > 0
@@ -186,7 +221,8 @@ export default function ProductPrice({ data = {}, setMessage, loading, setLoadin
           </div>
         </div>
         <div className="flex items-center gap-2 w-full">
-          <button className="bg-[#33BEC5] rounded-lg w-full text-white px-4 py-3" onClick={handleAddToCart}>
+          <button 
+            className="bg-[#33BEC5] rounded-lg w-full text-white px-4 py-3" onClick={handleAddToCart}>
             Add to Cart
           </button>
           {wishlist === true ? (

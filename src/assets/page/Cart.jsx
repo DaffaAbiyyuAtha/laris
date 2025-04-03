@@ -1,85 +1,104 @@
 import Footer from "../component/Footer";
-import NavbarLogin from "../component/NavbarLogin";
+import Navbar from "../component/Navbar";
 import { FaXmark } from "react-icons/fa6";
 import ProductLaptop1 from "../img/productLaptop1.svg";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { removeFromCart } from "../redux/reducers/cartSlice";
 
 export default function Cart() {
-  const products = Array(8).fill({
-    name: "MSI",
-    type: "Raider GE76",
-    model: "12 UE",
-    amount: 1,
-    price: "Rp 71.999.000",
-    priceDiskon: "Rp 75.599.000",
-    diskon: "-5%",
-    img: ProductLaptop1,
-  });
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.cart);
+
+  const [amounts, setAmounts] = useState(
+    cart.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {})
+  );
+
+  const handleAmountChange = (id, value) => {
+    const newValue = value === "" ? "" : Math.max(1, parseInt(value) || 1);
+    setAmounts((prev) => ({ ...prev, [id]: newValue }));
+  };
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * amounts[item.id], 0);
+  const total = cart.reduce((sum, item) => sum + item.finalPrice * amounts[item.id], 0);
+  const totalDiscount = subtotal - total;
+
   return (
     <div className="flex flex-col h-full justify-between">
-      <NavbarLogin />
+      <Navbar />
       <div className="flex justify-center w-full px-32 py-32 gap-16">
         <div className="flex gap-4 items-start flex-col">
-          <h1 className="text-xl font-bold">Tas ({products.length})</h1>
+          <h1 className="text-xl font-bold">Tas ({cart.length})</h1>
           <div className="flex  items-start gap-3 ">
             <div className="flex flex-col h-[750px] no-scrollbar px-2 overflow-y-scroll gap-9">
-              {products.map((items) => {
-                return (
-                  <div className="flex bg-[#ECF6FF] gap-8  px-5 pt-6 w-full  shadow-black/50 shadow-lg rounded-lg pb-[52px]">
-                    <img src={items.img} alt="product" />
-                    <div className="flex flex-col gap-8">
-                      <div className="flex flex-col gap-2">
-                        <h1 className="text-xl font-semibold">{items.name}</h1>
-                        <h2 className="text-2xl">{items.type}</h2>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <h1 className="text-xl font-semibold">Model</h1>
-                        <h2 className="text-2xl">{items.model}</h2>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <h1 className="text-xl font-semibold">Amount</h1>
-                        <h2 className="text-2xl">{items.amount}</h2>
-                      </div>
+              {cart.length === 0 ? (
+                <div className="">You don't have a cart at the moment</div>
+              ) : (
+                cart.map((items) => (
+                <div className="flex bg-[#ECF6FF] gap-8  px-5 pt-6 w-full  shadow-black/50 shadow-lg rounded-lg pb-[52px]">
+                  <img src={items.image} alt="product" className="w-60"/>
+                  <div className="flex flex-col gap-8">
+                    <div className="flex flex-col gap-2">
+                      <h1 className="text-xl font-semibold">{items.category}</h1>
+                      <h2 className="text-2xl">{items.name}</h2>
                     </div>
-                    <div className="flex flex-col items-end justify-between">
-                      <button>
-                        <FaXmark />
-                      </button>
-                      <div className="flex items-center">
-                        <h1 className="font-bold text-2xl">{items.price}</h1>
-                        <h2 className="text-2xl font-bold text-stone-500 line-through">
-                          {items.priceDiskon}
-                        </h2>
-                        <h3 className="text-2xl text-[#FF2525] font-bold">
-                          {items.diskon}
-                        </h3>
-                      </div>
+                    {/* <div className="flex flex-col gap-2">
+                      <h1 className="text-xl font-semibold">Model</h1>
+                      <h2 className="text-2xl">{items.model}</h2>
+                    </div> */}
+                    <div className="flex flex-col gap-2">
+                      <h1 className="text-xl font-semibold">Amount</h1>
+                      <input
+                          type="number"
+                          value={amounts[items.id]}
+                          onChange={(e) => handleAmountChange(items.id, e.target.value)}
+                          className="w-20 text-center border rounded-md p-1"
+                          min="1"
+                        />
                     </div>
                   </div>
-                );
-              })}
+                  <div className="flex flex-col items-end justify-between">
+                    <button
+                      onClick={() => dispatch(removeFromCart(items.id))}
+                    >
+                      <FaXmark />
+                    </button>
+                    <div className="flex gap-3 items-center">
+                      <h1 className="font-bold text-2xl">
+                        Rp {(items.finalPrice * amounts[items.id]).toLocaleString("id-ID")}
+                      </h1>
+                      <h2 className="text-2xl font-bold text-stone-500 line-through">
+                        Rp {(items.price * amounts[items.id]).toLocaleString("id-ID")}
+                      </h2>
+                      <h3 className="text-2xl text-[#FF2525] font-bold">
+                        {items.discount} %
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                ))
+              )}
             </div>
             <div className="flex flex-col gap-9">
               <div className="flex flex-col  gap-4">
                 <h1 className="text-xl font-bold">Total</h1>
                 <div className="flex flex-col px-5 py-4 rounded-xl gap-3 w-[406px] shadow-black/50 shadow-lg bg-[#ECF6FF]">
                   <div className="flex justify-between text-xl font-bold">
-                    <h1>Subtotal ({products.length} Product)</h1>
-                    <h2>Rp 92.498.200</h2>
+                    <h1>Subtotal ({cart.length} Product)</h1>
+                    <h2>{subtotal > 0 ? `Rp ${subtotal.toLocaleString("id-ID")}` : "-"}</h2>
                   </div>
-                  <div className="flex justify-between text-xl font-bold">
-                    <h1>Vouchers</h1>
-                    <h2>-</h2>
+                  <div className="flex justify-between text-red-500 text-xl font-bold mb-8">
+                    <h1>Total Discount</h1>
+                    <h2>{totalDiscount > 0 ? `Rp ${totalDiscount.toLocaleString("id-ID")}` : "-"}</h2>
                   </div>
-                  <p className="text-[#2FFF5D] text-xs">
-                    See All Your vouchers
-                  </p>
                   <div className="flex justify-between text-xl font-bold">
                     <h1>Total</h1>
-                    <h2>Rp 92.498.200</h2>
+                    <h2>{total > 0 ? `Rp ${total.toLocaleString("id-ID")}` : "-"}</h2>
                   </div>
                 </div>
               </div>
-              <button className="px-28 py-3 bg-[#33BEC5] text-white rounded-xl">
+              <button className="px-28 py-3 bg-[#33BEC5] text-white rounded-xl shadow-black/50 shadow-lg active:shadow-none">
                 Process to Buy
               </button>
             </div>

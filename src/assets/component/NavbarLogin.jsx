@@ -29,14 +29,56 @@ function NavbarLogin() {
             />
           </div>
         </div>
-        <Link to="/dashboard">
-          <FaUser />
-        </Link>
-
-        <FaHeart />
-        <Link to={"/product/cart"}>
-          <FaBagShopping />
-        </Link>
+        <div 
+          onClick={() => handleSignUp()}
+          className="text-[#33BEC5] text-xs cursor-pointer">
+              Sign Up
+        </div>
+        <div 
+          onClick={() => handleLogin()}
+          className="text-xs text-white bg-[#33BEC5] py-1 px-2 rounded-full cursor-pointer">
+              Login
+        </div>
+        {tokens === null ? (
+          <>
+            <div 
+            onClick={() => handleSignUp()}
+            className="text-[#33BEC5] text-xs cursor-pointer">
+                Sign Up
+            </div>
+            <div 
+              onClick={() => handleLogin()}
+              className="text-xs text-white bg-[#33BEC5] py-1 px-2 rounded-full cursor-pointer">
+                  Login
+            </div>
+          </>
+        ) : (
+        <div className="">
+          <div
+            onClick={() => handleAccount()}
+            className="cursor-pointer text-2xl"
+          >
+              <FaUser />
+          </div>
+          <div
+            onClick={() => handleFavorite()}
+            className="cursor-pointer text-2xl"
+          >
+              <FaHeart />
+          </div>
+          <div 
+              onClick={() => handleCart()}
+              className="relative cursor-pointer"
+          >
+            <FaBagShopping className="text-2xl" />
+            {cart.length > 0 && (
+              <div className="absolute -top-2 -right-2 flex items-center justify-center text-xs w-5 h-5 rounded-full bg-red-500 text-white">
+                {cart.length}
+              </div>
+            )}
+          </div>
+        </div>
+        )}
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ import CategoryWatch from "../component/categories/CategoryWatch";
 import CategoryPS from "../component/categories/CategoryPS";
 
 function Home() {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
     const productRefTop = useRef(null);
     const productRefBottom = useRef(null);
     const banners = [banner, banner, banner];

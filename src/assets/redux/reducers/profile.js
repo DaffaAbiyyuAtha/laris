@@ -9,7 +9,6 @@ const profile = createSlice({
   initialState,
   reducers: {
     datasProfile: (state, action) => {
-      console.log("Payload yang diterima di reducer:", action.payload);
       state.dataProfile = action.payload;
     },
     removeData: (state) => {
