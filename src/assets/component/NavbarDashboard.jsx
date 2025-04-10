@@ -9,7 +9,6 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 function NavbarDashboard() {
   const [loading, setLoading] = React.useState(false);
   const data = useSelector((state) => state.profile.dataProfile);
-  console.log(data)
   const tokens = useSelector((state) => state.auth.token);
   const userPicture = data?.profile?.picture || profile;
   const [img, setImg] = React.useState(false);
@@ -17,7 +16,6 @@ function NavbarDashboard() {
   const navigate = useNavigate();
   const [file, setFile] = React.useState(null);
   const [preview, setPreview] = React.useState(null);
-  console.log("Picture in FormData1: ", file);
 
   function popupProfile() {
     setLoading(true);
@@ -31,15 +29,12 @@ function NavbarDashboard() {
   }
 
   async function changeImg(e) {
-    console.log("changeImg function called");
     e.preventDefault();
   
     if (!file) {
       alert("Pilih gambar terlebih dahulu!");
       return;
     }
-
-    console.log("Picture in FormData2: ", file);
     
     const fullname = data.profile.fullName;
     const province = data.profile.province
@@ -65,7 +60,6 @@ function NavbarDashboard() {
     }
   
     try {
-      console.log("Sending request to update profile...");
       const dataPicture = await fetch("http://localhost:8100/profile/update", {
         method: "PATCH",
         headers: {
@@ -73,7 +67,6 @@ function NavbarDashboard() {
         },
         body,
       });
-      console.log("Response status:", dataPicture.status);
   
       if (!dataPicture.ok) {
         console.error(`HTTP error! status: ${dataPicture.status}`);

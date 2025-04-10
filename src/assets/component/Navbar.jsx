@@ -31,6 +31,15 @@ function Navbar({ isPopupOpen }) {
         }
     }
 
+    function handleCart() {
+        if (location.pathname !== "/product/cart") {
+            setLoading(true);
+            setTimeout(() => {
+                navigate("/product/cart");
+            }, 2000);
+        }
+    }
+
     function handleFavorite() {
         if (location.pathname !== "/dashboard/my-favorite") {
             setLoading(true);
@@ -155,7 +164,7 @@ function Navbar({ isPopupOpen }) {
                                     <FaHeart />
                                 </div>
                                 <div 
-                                    onClick={() => console.log("Handle Cart")}
+                                    onClick={handleCart}
                                     className="relative cursor-pointer"
                                 >
                                     <FaBagShopping className="text-2xl" />

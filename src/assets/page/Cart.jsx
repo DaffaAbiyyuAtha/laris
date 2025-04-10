@@ -68,12 +68,16 @@ export default function Cart() {
                       <h1 className="font-bold text-2xl">
                         Rp {(items.finalPrice * amounts[items.id]).toLocaleString("id-ID")}
                       </h1>
-                      <h2 className="text-2xl font-bold text-stone-500 line-through">
-                        Rp {(items.price * amounts[items.id]).toLocaleString("id-ID")}
-                      </h2>
-                      <h3 className="text-2xl text-[#FF2525] font-bold">
-                        {items.discount} %
-                      </h3>
+                      {items.discount > 0 ? (
+                        <>
+                          <h2 className="text-2xl font-bold text-stone-500 line-through">
+                            Rp {(items.price * amounts[items.id]).toLocaleString("id-ID")}
+                          </h2>
+                          <h3 className="text-2xl text-[#FF2525] font-bold">
+                            {items.discount} %
+                          </h3>
+                        </>
+                      ) : null}
                     </div>
                   </div>
                 </div>
