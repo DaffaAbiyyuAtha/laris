@@ -16,7 +16,9 @@ export default function CategoryPS() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://localhost:8100/categories/filter?search=PS");
+        const res = await fetch(
+          "http://localhost:8100/categories/filter?search=PS"
+        );
         const data = await res.json();
         console.log("Fetched data:", data);
 
@@ -44,12 +46,12 @@ export default function CategoryPS() {
               >
                 <div className="flex flex-col gap-4">
                   <img
-                    src={product.images?.[0] || "/placeholder.png"}
-                    alt={product.name_product || "Product Name"}
+                    src={product.image?.[0] || "/placeholder.png"}
+                    alt={product.nameProduct || "Product Name"}
                     className="w-40 h-40 object-cover"
                   />
                   <h1>
-                    {product.name_product || "Nama Produk Tidak Diketahui"}
+                    {product.nameProduct || "Nama Produk Tidak Diketahui"}
                   </h1>
                 </div>
                 <h2>Rp {product.price?.toLocaleString("id-ID") || "0"}</h2>

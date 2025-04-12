@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 export default function CategoryMenu({ setActiveComponent }) {
@@ -397,7 +397,7 @@ export default function CategoryMenu({ setActiveComponent }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full px-28">
+    <div className="flex flex-col gap-4 w-fit px-28">
       <div className="flex justify-between items-center w-full gap-4">
         <h1 className="font-semibold text-2xl text-[#408A89]">Categories</h1>
         <div className="flex gap-1">
@@ -416,10 +416,10 @@ export default function CategoryMenu({ setActiveComponent }) {
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center w-full items-center">
         <div className="container">
           <div
-            className="flex gap-4 overflow-x-scroll no-scrollbar py-2 px-20"
+            className="flex gap-4 w-full overflow-x-scroll no-scrollbar py-2 "
             id="scroll"
           >
             {itemsCategory.map((item) => (

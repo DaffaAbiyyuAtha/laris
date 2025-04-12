@@ -26,6 +26,7 @@ import DashboardAccountSetting from "./assets/page/DashboardAccountSetting";
 import DashboardAccountSettingAdmin from "./assets/page/DashboardAccountSettingAdmin";
 import PageNotFound from "./assets/page/PageNotFound";
 import PopupProduct from "./assets/component/popUp/PopupProduct";
+import CategoryTV from "./assets/component/categories/CategoryTV";
 
 const persistor = persistStore(store);
 
@@ -39,22 +40,46 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/login/login-success" element={<LoginSuccess />} />
-            <Route path="/login/login-success-admin" element={<LoginSuccessAdmin />} />
+            <Route
+              path="/login/login-success-admin"
+              element={<LoginSuccessAdmin />}
+            />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="/product/cart" element={<Cart />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/product" element={<DashboardProduct />} />
-            <Route path="/dashboard/transaction/sell-product" element={<DashboardTransactions />} />
-            <Route path="/dashboard/my-account" element={<DashboardAccount />} />
-            <Route path="/dashboard/transaction/detail" element={<DashboardTransactionsDetail />} />
-            <Route path="/dashboard/my-favorite" element={<DashboardFavorite />} />
-            <Route path="/dashboard/product/new-product" element={<DashboardNewProduct />} />
+            <Route
+              path="/dashboard/transaction/sell-product"
+              element={<DashboardTransactions />}
+            />
+            <Route
+              path="/dashboard/my-account"
+              element={<DashboardAccount />}
+            />
+            <Route
+              path="/dashboard/transaction/detail"
+              element={<DashboardTransactionsDetail />}
+            />
+            <Route
+              path="/dashboard/my-favorite"
+              element={<DashboardFavorite />}
+            />
+            <Route
+              path="/dashboard/product/new-product"
+              element={<DashboardNewProduct />}
+            />
             <Route path="/coba" element={<Coba />} />
             <Route path="/login-success" element={<LoginSuccess />} />
-            <Route path="/dashboard/account-setting/owner" element={<DashboardAccountSetting />} />
-            <Route path="/dashboard/account-setting/admin" element={<DashboardAccountSettingAdmin />} />
+            <Route
+              path="/dashboard/account-setting/owner"
+              element={<DashboardAccountSetting />}
+            />
+            <Route
+              path="/dashboard/account-setting/admin"
+              element={<DashboardAccountSettingAdmin />}
+            />
             <Route path="/pop" element={<PopupProduct />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
