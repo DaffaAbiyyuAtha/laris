@@ -11,7 +11,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const tokens = useSelector((state) => state.auth.token);
-
+  console.log("Token yang dikirim:", tokens);
   const [amounts, setAmounts] = useState(
     cart.reduce((acc, item) => ({ ...acc, [item.id]: 1 }), {})
   );
@@ -55,9 +55,10 @@ export default function Cart() {
 
       const result = await response.json();
       console.log(result, "ini hasil");
-      if (result.result.items) {
+      if (result && result.result && result.result.items) {
         alert("Transaksi berhasil!");
       } else {
+        console.log("Response tidak sesuai:", result);
         alert("Transaksi gagal!");
       }
     } catch (error) {

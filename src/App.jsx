@@ -59,7 +59,7 @@ function App() {
               element={<DashboardAccount />}
             />
             <Route
-              path="/dashboard/transaction/detail"
+              path="/dashboard/transaction/detail/:order_id"
               element={<DashboardTransactionsDetail />}
             />
             <Route
