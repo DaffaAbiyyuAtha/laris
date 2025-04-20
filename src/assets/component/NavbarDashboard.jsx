@@ -10,7 +10,10 @@ function NavbarDashboard() {
   const [loading, setLoading] = React.useState(false);
   const data = useSelector((state) => state.profile.dataProfile);
   const tokens = useSelector((state) => state.auth.token);
-  const userPicture = data?.profile?.picture || profile;
+  const userPicture = /^https?:\/\//.test(data?.profile?.picture)
+    ? data.profile.picture
+    : `http://localhost:8100/picture/${data?.profile?.picture}`;
+
   const [img, setImg] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,25 +28,25 @@ function NavbarDashboard() {
     }, 2000);
   }
   function closeImg() {
-    navigate(0)
+    navigate(0);
   }
 
   async function changeImg(e) {
     e.preventDefault();
-  
+
     if (!file) {
       alert("Pilih gambar terlebih dahulu!");
       return;
     }
-    
+
     const fullname = data.profile.fullName;
-    const province = data.profile.province
-    const city = data.profile.city
-    const postalCode = data.profile.postalCode
-    const gender = data.profile.gender
-    const country = data.profile.country
-    const mobile = data.profile.mobile
-    const address = data.profile.address
+    const province = data.profile.province;
+    const city = data.profile.city;
+    const postalCode = data.profile.postalCode;
+    const gender = data.profile.gender;
+    const country = data.profile.country;
+    const mobile = data.profile.mobile;
+    const address = data.profile.address;
     const body = new FormData();
     body.append("picture", file);
     body.append("fullname", fullname);
@@ -58,24 +61,24 @@ function NavbarDashboard() {
     for (let pair of body.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     }
-  
+
     try {
-      const dataPicture = await fetch("http://localhost:8100/profile/update", {
+      const dataPicture = await fetch("http://localhost:8100/profile/picture", {
         method: "PATCH",
         headers: {
           Authorization: "Bearer " + tokens,
         },
         body,
       });
-  
+
       if (!dataPicture.ok) {
         console.error(`HTTP error! status: ${dataPicture.status}`);
         return;
       }
-  
+
       const listData = await dataPicture.json();
       console.log("Raw Response:", listData);
-  
+
       if (listData.success && listData.result) {
         dispatch(datasProfile(listData.result));
       } else {
@@ -85,7 +88,6 @@ function NavbarDashboard() {
       console.error("Error saat proses update:", error);
     }
   }
-  
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -96,6 +98,7 @@ function NavbarDashboard() {
     reader.readAsDataURL(selectedFile);
 
     reader.onloadend = () => {
+      console.log(reader);
       setPreview(reader.result);
     };
   };
@@ -131,12 +134,26 @@ function NavbarDashboard() {
             onClick={(e) => e.stopPropagation()}
             className="flex flex-col items-center gap-10"
           >
-            <img src={userPicture} alt="Profile" className="max-w-xs rounded-lg shadow-lg" />
+            <img
+              src={userPicture}
+              alt="Profile"
+              className="max-w-xs rounded-lg shadow-lg"
+            />
             {preview && (
-              <img src={preview} alt="Preview" className="max-w-xs rounded-lg shadow-lg" />
+              <img
+                src={preview}
+                alt="Preview"
+                className="max-w-xs rounded-lg shadow-lg"
+              />
             )}
             <form onSubmit={changeImg}>
-              <input type="file" name="file" id="file" className="hidden" onChange={handleFileChange}></input>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                className="hidden"
+                onChange={handleFileChange}
+              ></input>
               <div className="flex flex-col gap-4">
                 <label
                   htmlFor="file"
