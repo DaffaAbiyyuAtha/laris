@@ -13,7 +13,7 @@ function DashboardAccount() {
     const tokens = useSelector((state) => state.auth.token);
     const data = useSelector((state) => state.profile.dataProfile);
     const navigate = useNavigate();
-    const [message, setMessage] = React.useState(true);
+    const [message, setMessage] = React.useState(false);
     console.log(message)
     const dispatch = useDispatch();
 
