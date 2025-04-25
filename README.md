@@ -1,8 +1,8 @@
 # MyTick frontend project
 
-Welcome to the MyTick Frontend Web Project! This project utilizes the power of Tailwind CSS to create a sleek and responsive user interface for an engaging online ticket purchasing experience.
+Laris Store is a modern e-commerce platform designed to simplify the buying and selling of electronic products such as smartphones, computers, TVs, and other electronic devices. This project is built with a frontend powered by ReactJS and Tailwind CSS, and a robust backend using Golang and PostgreSQL.
 
-MyTick is like a cool superhero in the world of online events in Indonesia! Imagine you want to see a cool event or find a trendy event online. It's like having a magic book that allows you to see what you want now and pay for it online and easily.
+Laris Store allows users to browse a variety of electronic products, add items to their cart, proceed to checkout, and complete secure payments with ease. All these processes are supported by a stable and efficient backend system, ensuring a smooth and reliable shopping experience.
 
 <img src="./src/assets/img/readme1.png" alt="web-desktop" />
 <p float="left" align="center">
@@ -31,24 +31,23 @@ cd laris
 ```sh
 code .
 ```
-3. Create Image
+3. Install npm
 ```sh
-docker build -t frontend .
+npm i
 ```
-4. Run Image
+4. Run Project
 ```sh
-docker run -d -p 5000:5000 --name frontend frontend
+npm run dev
 ```
-5. Open your google chrome and you can view the project at http://103.93.58.89:21211:5000.
-6. If you want to run it full, I recommend running the backend https://github.com/DaffaAbiyyuAtha/fgh21-go-event-organizer
+5. Open your google chrome and you can view the project at http://localhost:5173/
+6. If you want to run it full, I recommend running the backend https://github.com/DaffaAbiyyuAtha/go-laris
 
 ## Features
 
-- <b>Purchase Tickets</b>: Users can buy tickets for selected events.
-- <b>Responsive Design</b>: Optimized for both mobile and desktop use.
+- <b>Purchase</b>: Users can buy item for selected product.
 - <b>User Profile Management</b>: Users can manage their profile and view order history.
-- <b>Create Events</b>: Organizers can list their events with full details.
-- <b>Add Whishlist</b>: Users can add wishlist event and see all this wishlist.
+- <b>Create product</b>: Organizers can list their product with full details.
+- <b>Add Whishlist</b>: Users can add wishlist product and see all this wishlist.
 
 ## Technologies Used
 
