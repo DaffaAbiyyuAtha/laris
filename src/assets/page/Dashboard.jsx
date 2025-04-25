@@ -13,6 +13,7 @@ function Dashboard() {
         const data = await fetch("http://localhost:8100/order", {});
         const listAllTransactions = await data.json();
         setTransactions(listAllTransactions.result);
+        console.log(listAllTransactions.result)
     }
 
     async function listUsers() {
